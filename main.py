@@ -57,7 +57,7 @@ selected_pop_range = st.sidebar.slider(
 # THỰC HIỆN LỌC DỮ LIỆU DỰA TRÊN THANH SIDEBAR
 filtered_df = df.copy()
 if selected_genre != "Tất cả (All)":
-    filtered_df = filtered_df[filtered_df['track_genre'].str.contains(selected_genre, case=False, na=False)]
+    filtered_df = filtered_df[filtered_df['track_genre'].str.split(', ').apply(lambda g: selected_genre in g)]
 
 filtered_df = filtered_df[
     (filtered_df['popularity'] >= selected_pop_range[0]) & 

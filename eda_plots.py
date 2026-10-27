@@ -165,27 +165,6 @@ fig_box.update_layout(
     xaxis_title="",
     plot_bgcolor='white'
 )
-fig_box.show()# BIỂU ĐỒ 3.5: BOXPLOT SO SÁNH THỜI LƯỢNG
-df_hit = df[df['popularity'] >= 80].copy()
-df_hit['Nhóm'] = 'Siêu Hit (Popularity ≥ 80)'
-df_flop = df[df['popularity'] <= 20].copy()
-df_flop['Nhóm'] = 'Nhạc Flop (Popularity ≤ 20)'
-df_box = pd.concat([df_hit, df_flop])
-
-fig_box = px.box(
-    df_box, 
-    x="Nhóm", 
-    y="duration_min", 
-    color="Nhóm",
-    title='Hình 3.5: So sánh phân phối thời lượng bài hát: Siêu Hit vs Nhạc Flop',
-    points="outliers",
-    color_discrete_map={'Siêu Hit (Popularity ≥ 80)': '#1DB954', 'Nhạc Flop (Popularity ≤ 20)': '#E91E63'}
-)
-fig_box.update_layout(
-    yaxis_title="Thời lượng (Phút)",
-    xaxis_title="",
-    plot_bgcolor='white'
-)
 fig_box.show()
 
 
