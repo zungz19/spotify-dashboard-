@@ -120,7 +120,7 @@ else:
         # Tránh lỗi nếu dữ liệu lọc quá ít không tính được tương quan
         if len(filtered_df) > 5:
             corr_matrix = filtered_df[numeric_cols].corr(method='pearson')
-            fig_heatmap = px.imshow(corr_matrix, text_auto='.2f', aspect="auto", color_continuous_scale='Tealrose')
+            fig_heatmap = px.imshow(corr_matrix, text_auto='.2f', aspect="auto", color_continuous_scale='Tealrose', zmin=-1, zmax=1)
             fig_heatmap.update_layout(margin=dict(l=0, r=0, t=30, b=0))
             st.plotly_chart(fig_heatmap, use_container_width=True, theme="streamlit")
         else:
@@ -159,7 +159,7 @@ else:
 
         fig_radar.update_layout(
             polar=dict(
-                radialaxis=dict(visible=True, range=[0, 0.75], gridcolor='#444444', linecolor='#444444'),
+                radialaxis=dict(visible=True, range=[0, 1], gridcolor='#444444', linecolor='#444444'),
                 angularaxis=dict(gridcolor='#444444', linecolor='#444444'),
                 bgcolor='rgba(0,0,0,0)'
             ),
