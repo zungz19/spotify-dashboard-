@@ -1,0 +1,30 @@
+flowchart LR
+    subgraph S["① NGUỒN DỮ LIỆU (tự thu thập)"]
+        K["Kworb.net<br/>BXH Spotify VN + toàn cầu<br/><i>web scraping HTML</i>"]
+        R["ReccoBeats API<br/>đặc trưng âm thanh<br/><i>theo Spotify ID</i>"]
+        D["Deezer API<br/>phát hành, thể loại,<br/>hãng đĩa, explicit"]
+        M["MusicBrainz API<br/>quốc gia, loại nghệ sĩ"]
+    end
+    subgraph L["② LANDING<br/>data/raw/"]
+        LH["HTML theo ngày<br/>+ JSON từng bài<br/>(cache, đối chiếu)"]
+    end
+    subgraph W["③ KHO DỮ LIỆU DuckDB · data/warehouse.duckdb"]
+        RAW["schema raw<br/>giữ nguyên dạng chuỗi"]
+        STG["schema staging<br/>làm sạch · ép kiểu<br/>khử trùng · kiểm tra chéo"]
+        MART["schema mart<br/>dim_track · dim_artist<br/>fact_chart_totals · fact_chart_daily<br/>track_market"]
+        META["schema meta<br/>update_log · cleaning_report"]
+    end
+    subgraph A["④ PHÂN TÍCH & HIỂN THỊ"]
+        AN["src/analysis.py<br/>tỷ lệ trụ hạng · effect size<br/>khuyến nghị · chấm điểm bài"]
+        DB["Dashboard Streamlit + Plotly<br/>tự cập nhật mỗi 6 giờ<br/>lọc chéo · công cụ chọn nhạc"]
+        CSV["CSV xuất ra<br/>data/export/"]
+    end
+    K -->|collect_kworb.py| LH
+    R -->|collect_reccobeats.py| LH
+    D -->|collect_deezer.py<br/>ghép ISRC / fuzzy| LH
+    M -->|collect_musicbrainz.py| LH
+    LH --> RAW -->|clean.py| STG -->|build_mart.py| MART
+    STG -. ghi .-> META
+    MART --> AN --> DB
+    MART --> CSV
+    DB -->|"nút Cập nhật / tự động"| K

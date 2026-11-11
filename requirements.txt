@@ -1,3 +1,8 @@
-pandas
-streamlit
-plotly
+duckdb==1.2.2
+pandas>=2.2,<3
+numpy>=1.26
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=5.0
+streamlit==1.45.1
+plotly==6.3.0

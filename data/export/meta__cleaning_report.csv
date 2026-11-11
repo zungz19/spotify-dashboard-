@@ -1,0 +1,24 @@
+﻿table_name,step,rows_before,rows_after,rows_affected,note
+chart_totals,Dữ liệu thô từ Kworb (VN + toàn cầu),17875,17875,0,
+chart_totals,Bỏ dòng không có Spotify track ID hợp lệ,17875,17874,1,
+chart_totals,Chuẩn hóa Unicode NFC + bỏ khoảng trắng thừa ở tên bài/nghệ sĩ,17874,17874,1,Ký tự tiếng Việt dạng tổ hợp -> dựng sẵn
+chart_totals,"Chuyển chuỗi '1,139,605' / '(x802)' sang số; bỏ dòng không đọc được số",17874,17874,0,
+chart_totals,"Kiểm tra logic: 1<=đỉnh<=200, ngày top10 <= số ngày, stream đỉnh <= tổng",17874,17874,0,
+chart_totals,"Khử trùng lặp (thị trường, track_id)",17874,17874,0,
+chart_totals,Đánh dấu bài trùng tên khác ID (giữ bản nhiều stream nhất làm bản chính),17874,17874,332,"Không xóa, chỉ loại khỏi phân tích bằng cờ is_primary_version"
+chart_daily,"Ép kiểu số/ngày, bỏ dòng thiếu vị trí hoặc ngày",800,800,0,
+chart_daily,"Khử trùng lặp (thị trường, ngày, track_id) khi chạy nhiều lần/ngày",800,800,0,
+tracks,"Chuẩn hóa ISRC (bỏ gạch nối, viết hoa) và bỏ mã sai định dạng",4855,4855,31,"ISRC sai -> NULL, sẽ ghép Deezer theo tên"
+audio_features,"Giá trị ngoài miền hợp lệ -> NULL (0-1, tempo 30-250 BPM, loudness -60..5 dB)",4855,4855,0,tempo = 0 nghĩa là không đo được nhịp
+audio_features,Bỏ bài thiếu quá nhiều đặc trưng (< 5/7 chỉ số),4855,4855,0,
+deezer,Kết quả ghép Deezer theo ISRC,7438,7438,4707,
+deezer,Kết quả ghép Deezer theo tên (fuzzy >= 0.85),7438,7438,2103,
+deezer,Không ghép được với Deezer,7438,7438,628,
+deezer,Loại ghép nhầm: ghép theo tên nhưng thời lượng lệch > 15 giây,6810,6793,17,
+deezer,Thiếu ngày phát hành của bài -> lấy ngày phát hành album,6793,6793,0,
+deezer,Ngày phát hành vô lý (trước 1950 / sau năm hiện tại) -> NULL,6793,6793,0,
+deezer,BPM = 0 trên Deezer (chưa phân tích) -> NULL,6793,6793,5179,
+artists,Thiếu mã quốc gia MusicBrainz -> suy từ tên khu vực (area),3111,3111,15,
+artists,Nghệ sĩ không có trên MusicBrainz -> suy luận là VN nếu >= 50% tên bài có dấu tiếng Việt,3111,3111,270,
+artists,Kiểm chứng: tỷ lệ khớp giữa MusicBrainz và quy tắc tên tiếng Việt,3111,3111,1185,Khớp 94.9% trên 1185 nghệ sĩ có cả 2 nguồn
+artists,Sửa khớp nhầm trùng tên: MusicBrainz ra nước ngoài nhưng tên bài tiếng Việt -> VN,3111,3111,41,

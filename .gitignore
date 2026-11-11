@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+data/.pipeline.lock
+data/warehouse.duckdb.wal
+# data/raw/ có thể rất nhiều file nhỏ; bỏ comment dòng dưới nếu không muốn đưa lên GitHub
+# data/raw/
